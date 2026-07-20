@@ -1,0 +1,12 @@
+0: Crosswalk
+1: Edge_Sidewalk
+2: Opened_Door
+3: Traffic_Light
+4: Obstacle
+5: Vehicle
+6: Person
+7: Pole_Bollard
+8: Pothole
+9: Stairs
+10: Animal
+11: Cane

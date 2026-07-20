@@ -1,0 +1,60 @@
+name: myeye
+description: "Awn-عون accessibility app for blind and visually impaired users."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.10.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  flutter_tts: ^3.8.5
+
+  # OCR - English only
+  google_mlkit_text_recognition: ^0.15.1
+
+  # Model deps
+  tflite_flutter: ^0.12.1
+  image: ^4.8.0
+
+  # Camera
+  camera: ^0.11.0+2
+  permission_handler: ^11.4.0
+  speech_to_text: ^7.4.0
+
+  # API calls
+  http: ^1.2.2
+  http_parser: ^4.1.2
+
+  # Save selected TTS voice and UI language
+  shared_preferences: ^2.2.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/models/best_float16.tflite
+    - assets/models/best_int8.tflite
+    - assets/models/efficientdet_lite0.tflite
+    - assets/labels/Label.txt
+    - assets/labels/obstacle_yolov11_labels.txt
+    - assets/labels/coco_labelmap.txt
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/myeye_launcher_icon.png"
+  adaptive_icon_background: "#020712"
+  adaptive_icon_foreground: "assets/images/myeye_launcher_icon.png"
+  min_sdk_android: 23

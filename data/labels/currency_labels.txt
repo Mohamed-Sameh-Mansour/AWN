@@ -1,0 +1,27 @@
+1.   0.25 pound
+
+2.   0.25 pound m
+
+3.   0.50 pound
+
+4.   0.50 pound m
+
+5.   1 pound
+
+6.   1 pound m
+
+7.   10 pound
+
+8.   10 pound new
+
+9.   100 pounds
+
+10.   20 pound new
+
+11.   20 pounds
+
+12.   200 pounds
+
+13.   5 pounds
+
+14.   50 pounds

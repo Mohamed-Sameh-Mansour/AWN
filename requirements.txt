@@ -1,0 +1,40 @@
+# =================================================================
+# AWN (Graduation Project - Object Detection and Spatial Awareness System)
+# Comprehensive Python Requirements
+# =================================================================
+
+# --- Core Web Framework & Backend API ---
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.6
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+# --- AI / ML Inference Providers & SDKs ---
+groq>=0.4.0
+google-genai>=0.3.0
+
+# --- Computer Vision & Deep Learning (Training & Inference) ---
+ultralytics>=8.0.207
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+easyocr>=1.7.1
+roboflow>=1.1.0
+
+# --- Image Processing & Numerical Computation ---
+Pillow>=10.1.0
+opencv-python>=4.8.1.78
+numpy>=1.26.2
+pandas>=2.1.0
+
+# --- Data Visualization & Utilities ---
+matplotlib>=3.8.0
+seaborn>=0.13.0
+pyyaml>=6.0.1
+tqdm>=4.66.0
+
+# --- HTTP Clients & Networking ---
+requests>=2.31.0
+httpx>=0.25.2

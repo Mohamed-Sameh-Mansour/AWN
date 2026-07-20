@@ -1,0 +1,4 @@
+Model,mAP50,mAP50-95,Training Time (min),Params (M)
+yolo11n.pt,0.767,0.596,1.42,2.62
+yolo11s.pt,0.871,0.704,1.66,9.44
+yolov8s.pt,0.869,0.705,1.63,11.16

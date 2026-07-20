@@ -1,0 +1,186 @@
+{
+  "name": "AWN_Medication_Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "Image-grapper",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "1e0be4c4-6566-43d0-9e0d-0123ceb85afc",
+      "name": "Webhook",
+      "webhookId": "0b5b0d99-d043-4dcb-874c-7fcac55080c2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-goog-api-key",
+              "value": "YOUR_GEMINI_API_KEY_HERE"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [\n    {\n      \"parts\": [\n        {\n          \"inlineData\": {\n            \"mimeType\": \"image/jpeg\",\n            \"data\": \"{{ $json.data }}\"\n          }\n        },\n        {\n          \"text\": \"Extract ONLY the exact medication name from the image. Respond with the name alone, no explanations.\"\n        }\n      ]\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        592,
+        0
+      ],
+      "id": "e6000042-f3ec-4fc6-94df-f78bf5ca32ee",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "binaryToPropery",
+        "binaryPropertyName": "image",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        288,
+        0
+      ],
+      "id": "0bf2c817-b403-4364-a6f8-835464ee65eb",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.candidates[0].content.parts[0].text }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are a precise medical information assistant. When given a medication name, provide ONLY the following in Arabic:\n\n1.  اسم الدواء باللغة العربية\n2. **المميزات:** [ميزة واحدة رئيسية بسطر واحد]\n3. **الآثار الجانبية:** [أثر جانبي شائع واحد بسطر واحد]\n4. **العيوب:** [عيب أو تحذير واحد بسطر واحد]\n\nالقواعد:\n- الإجابة باللغة العربية فقط.\n- كل قسم في سطر واحد فقط.\n- لا تفسيرات إضافية.\n- لا مقدمات أو خاتمات.\n- إذا كان الدواء غير معروف، قل: \"دواء غير معروف\"\n- المعلومات يجب أن تكون دقيقة وموجزة."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        864,
+        0
+      ],
+      "id": "c0e12038-d2d7-46f1-af87-33c4a4e35d24",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        736,
+        208
+      ],
+      "id": "396de9f3-0392-4ff9-82d7-8d57d9c2b374",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "FwSNCRjHtQDWHjY9",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $input.first().json.text;\n\n// تقسيم النص حسب السطور\nconst lines = text.split('\\n');\n\n// استخراج القيم\nconst drugName = lines[0].replace('اسم الدواء باللغة العربية:', '').trim();\nconst pros = lines[1].replace('المميزات:', '').trim();\nconst sideEffects = lines[2].replace('الآثار الجانبية:', '').trim();\nconst cons = lines[3].replace('العيوب:', '').trim();\n\nreturn [\n  {\n    json: {\n      drug_name_ar: drugName,\n      pros: pros,\n      side_effects: sideEffects,\n      cons: cons\n    }\n  }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        0
+      ],
+      "id": "1536300d-5f0c-4556-8275-49d2d497ff15",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "05897483-6924-4f79-98c2-5ba8acf35228",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5428857f6a5b4900f19af53f43e1706ef3b26419fb8322f8f0a7efb55f0d7c49"
+  },
+  "id": "URO3MWtM0QlaXN86",
+  "tags": []
+}

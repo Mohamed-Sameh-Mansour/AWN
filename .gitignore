@@ -1,0 +1,47 @@
+# ==========================================
+# Python & Backend
+# ==========================================
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# ==========================================
+# Environments & Secrets
+# ==========================================
+venv/
+env/
+.venv/
+.env
+
+# ==========================================
+# Jupyter Notebooks
+# ==========================================
+.ipynb_checkpoints/
+
+# ==========================================
+# OS Files
+# ==========================================
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# Flutter (Extra Safety)
+# ==========================================
+flutter/build/
+Flutter/build/
+
+# ==========================================
+# Critical Exceptions (Explicitly Included)
+# ==========================================
+# Models: Do NOT ignore the models directory or weight files
+!models/
+!models/**
+!*.pt
+!*.pth
+!*.tflite
+
+# Images: Do NOT ignore image files in root or subdirectories
+!*.png
+!*.jpg
+!*.jpeg
