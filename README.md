@@ -21,7 +21,7 @@
 
 <p align="center">
   <strong>Graduation Project — B.Sc. Artificial Intelligence</strong><br/>
-  Faculty of Computers and Artificial Intelligence · Menoufia University · 2025
+  Faculty of Computers and Artificial Intelligence · Menoufia University · 2026
 </p>
 
 ---
@@ -311,7 +311,7 @@ AWN/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/AWN.git
+git clone https://github.com/Mohamed-Sameh-Mansour/AWN.git
 cd AWN
 ```
 
@@ -402,7 +402,7 @@ python src/training/test_obstacle_models.py
 
 ## 📄 License
 
-This project was developed as a graduation requirement for the **Bachelor of Science in Artificial Intelligence** program at the **Faculty of Computers and Artificial Intelligence, Menoufia University, 2025**.
+This project was developed as a graduation requirement for the **Bachelor of Science in Artificial Intelligence** program at the **Faculty of Computers and Artificial Intelligence, Menoufia University, 2026**.
 
 ---
 
